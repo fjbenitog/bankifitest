@@ -2,11 +2,16 @@ package com.javi.bankify.server
 
 import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
+import akka.pattern._
+import akka.util.Timeout
 import cats.effect.IO
-import com.javi.bankify.model.{PrimesRequest, PrimesResponse}
-import com.javi.bankify.server.primes.{PrimesServiceDefault, PrimesServiceProvider}
+import com.javi.bankify.model._
+import com.javi.bankify.server.GoogleSearchReceptionist._
+import com.javi.bankify.server.primes._
 
 import scala.concurrent.Future
+import scala.concurrent.duration._
+import scala.language.postfixOps
 
 object WebServer {
 
@@ -31,10 +36,20 @@ class WebServer(implicit val actorSystem: ActorSystem) extends BankifyTestAPI {
   import actorSystem.dispatcher
   val primesServiceProvider = PrimesServiceProvider()
 
+  private implicit val timeout: Timeout = Timeout(1 second)
+
+  val receptionist =
+    actorSystem.actorOf(GoogleSearchReceptionist.props(), "GoogleSearchReceptionist")
+
   override def generatePrimes(request: PrimesRequest): Future[PrimesResponse] = {
     val primesService = primesServiceProvider.getPrimesService(request.algorithmName)
     primesService
       .generatePrimes(request.maxNumber)
       .map(primes => PrimesResponse(primesService.algorithmName, primes))
   }
+
+  override def searchInGoogle(query: String): Future[GoogleResponse] =
+    (receptionist ? Query(query))
+      .mapTo[Result]
+      .map(result => GoogleResponse(result.title, result.url, result.text))
 }

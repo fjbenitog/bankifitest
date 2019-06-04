@@ -24,6 +24,7 @@ class BankifyTestAPISpec extends WordSpec with ScalatestRouteTest with Matchers 
       case _ => Future.successful(PrimesResponse("Default",List(2,3)))
     }
 
+    override def searchInGoogle(query: String): Future[GoogleResponse] = ???
   }
 
   "BankifyTest API" must {

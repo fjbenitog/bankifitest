@@ -7,4 +7,6 @@ import scala.concurrent.Future
 trait BankifyTestAPI {
 
   def generatePrimes(request: PrimesRequest): Future[PrimesResponse]
+
+  def searchInGoogle(query: String): Future[GoogleResponse]
 }

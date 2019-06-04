@@ -4,6 +4,7 @@ import org.scalatest._
 import akka.actor.ActorSystem
 import akka.testkit.TestKit
 import com.javi.bankify.model.PrimesRequest
+import com.javi.bankify.server.GoogleSearchReceptionist.Query
 
 class WebServerSpec(_system: ActorSystem)
   extends TestKit(_system)
@@ -53,6 +54,17 @@ class WebServerSpec(_system: ActorSystem)
           .map(response => {
             response.primes should be(expectedPrimeList)
             response.algorithmName should be("Default")
+          })
+      }
+
+
+      "search" in {
+
+        val webServer = new WebServer()
+
+        webServer.searchInGoogle("pepe")
+          .map(response => {
+            response.title should be("Pepe")
           })
       }
 

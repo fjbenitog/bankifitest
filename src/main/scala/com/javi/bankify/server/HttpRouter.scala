@@ -14,7 +14,7 @@ trait HttpRouter extends FailFastCirceSupport { api: BankifyTestAPI =>
     namePrefix = Some("bankifytest-http")
   )
 
-  def main: Route = primesRoute
+  def main: Route = primesRoute ~ googleRoute
 
   private def primesRoute: Route =
     path("primes") {
@@ -24,6 +24,15 @@ trait HttpRouter extends FailFastCirceSupport { api: BankifyTestAPI =>
             api.generatePrimes(request)
           )
         }
+      }
+    }
+
+  private def googleRoute: Route =
+    path("google") {
+      parameters('query) { query =>
+        complete(
+          api.searchInGoogle(query)
+        )
       }
     }
 }
