@@ -4,10 +4,8 @@ import akka.actor.ActorSystem
 import akka.http.scaladsl.server.Route
 import akka.http.scaladsl.server.Directives._
 import akka.stream._
-import com.javi.bankify.model.{PrimesRequest, PrimesResponse}
+import com.javi.bankify.model._
 import de.heikoseeberger.akkahttpcirce.FailFastCirceSupport
-
-import scala.concurrent.Future
 
 trait HttpRouter extends FailFastCirceSupport { api: BankifyTestAPI =>
 
@@ -21,9 +19,9 @@ trait HttpRouter extends FailFastCirceSupport { api: BankifyTestAPI =>
   private def primesRoute: Route =
     path("primes") {
       post {
-        entity(as[PrimesRequest]) { _ =>
+        entity(as[PrimesRequest]) { request =>
           complete(
-            Future.successful(PrimesResponse(Set(1,2,3)))
+            api.generatePrimes(request.numbers)
           )
         }
       }
