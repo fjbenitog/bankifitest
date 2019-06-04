@@ -4,5 +4,5 @@ import scala.concurrent.Future
 
 trait BankifyTestAPI {
 
-  def generatePrimes(numbers: Long):Future[List[Long]]
+  def generatePrimes(numbers: Long, algorithmName: Option[String]): Future[List[Long]]
 }

@@ -4,5 +4,5 @@ import scala.concurrent.Future
 
 trait PrimesService {
 
-  def generatePrimes(maxNumber:Long):Future[List[Long]]
+  def generatePrimes(maxNumber: Long): Future[List[Long]]
 }

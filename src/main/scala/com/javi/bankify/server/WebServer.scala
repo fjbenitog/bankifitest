@@ -30,5 +30,6 @@ class WebServer extends BankifyTestAPI {
   import actorSystem.dispatcher
   val primesService = PrimesServiceDefault()
 
-  override def generatePrimes(maxNumber: Long): Future[List[Long]] = primesService.generatePrimes(maxNumber)
+  override def generatePrimes(maxNumber: Long, algorithmName: Option[String]): Future[List[Long]] =
+    primesService.generatePrimes(maxNumber)
 }
