@@ -21,7 +21,7 @@ trait HttpRouter extends FailFastCirceSupport { api: BankifyTestAPI =>
       post {
         entity(as[PrimesRequest]) { request =>
           complete(
-            api.generatePrimes(request.numbers)
+            api.generatePrimes(request.maxNumber)
           )
         }
       }
