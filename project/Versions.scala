@@ -18,5 +18,5 @@ object Versions {
     val json = "1.22.0"
   }
 
-  val circe      = "0.11.1"
+  val circe = "0.11.1"
 }
