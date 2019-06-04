@@ -1,14 +1,14 @@
 package com.javi.bankify.model
 
 import io.circe._
-import io.circe.generic.extras.semiauto._
+import io.circe.generic.semiauto._
 
-case class PrimesResponse(primes: List[Long])
+case class PrimesResponse(algorithmName: String, primes: List[Long])
 
 object PrimesResponse {
   implicit val primeResponseEncoder: Encoder[PrimesResponse] =
-    deriveUnwrappedEncoder[PrimesResponse]
+    deriveEncoder[PrimesResponse]
 
   implicit val PrimeResponseDecoder: Decoder[PrimesResponse] =
-    deriveUnwrappedDecoder[PrimesResponse]
+    deriveDecoder[PrimesResponse]
 }

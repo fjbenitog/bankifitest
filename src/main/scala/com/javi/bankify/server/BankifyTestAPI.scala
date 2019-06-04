@@ -1,8 +1,10 @@
 package com.javi.bankify.server
 
+import com.javi.bankify.model._
+
 import scala.concurrent.Future
 
 trait BankifyTestAPI {
 
-  def generatePrimes(numbers: Long, algorithmName: Option[String]): Future[List[Long]]
+  def generatePrimes(request: PrimesRequest): Future[PrimesResponse]
 }

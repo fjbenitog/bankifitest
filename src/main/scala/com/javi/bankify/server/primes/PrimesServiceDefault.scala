@@ -2,11 +2,11 @@ package com.javi.bankify.server.primes
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class PrimesServiceDefault private (implicit computingExecutionContext: ExecutionContext)
-    extends PrimesService {
+private class PrimesServiceDefault extends PrimesService {
 
-  //Copied from internet implementation
-  def generatePrimes(maxNumber: Long): Future[List[Long]] = Future {
+  def generatePrimes(
+      maxNumber: Long
+  )(implicit executionContext: ExecutionContext): Future[List[Long]] = Future {
     var c    = 1
     var p    = 2
     var d    = 2
@@ -23,8 +23,6 @@ class PrimesServiceDefault private (implicit computingExecutionContext: Executio
     }
     list.toList
   }
-}
 
-object PrimesServiceDefault {
-  def apply()(implicit computingExecutionContext: ExecutionContext) = new PrimesServiceDefault
+  override def algorithmName: String = "Default"
 }

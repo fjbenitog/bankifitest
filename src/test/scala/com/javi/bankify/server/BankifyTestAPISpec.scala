@@ -19,9 +19,9 @@ class BankifyTestAPISpec extends WordSpec with ScalatestRouteTest with Matchers 
   val httpRouter: HttpRouter = new BankifyTestAPI with HttpRouter {
     override implicit val actorSystem: ActorSystem = system
 
-    override def generatePrimes(numbers: Long, algorithmName: Option[String]): Future[List[Long]] = algorithmName match {
-      case Some(_) => Future.successful(List(2,3,5))
-      case _ => Future.successful(List(2,3))
+    override def generatePrimes(request: PrimesRequest): Future[PrimesResponse] = request.algorithmName match {
+      case Some(name) => Future.successful(PrimesResponse(name,List(2,3,5)))
+      case _ => Future.successful(PrimesResponse("Default",List(2,3)))
     }
 
   }
@@ -42,7 +42,7 @@ class BankifyTestAPISpec extends WordSpec with ScalatestRouteTest with Matchers 
 
       Post("/primes",PrimesRequest(maxNumber,Some(algorithmName))) ~> httpRouter.main ~> check {
 
-        responseAs[PrimesResponse].primes shouldEqual List(2,3)
+        responseAs[PrimesResponse].primes shouldEqual List(2,3,5)
       }
     }
 
