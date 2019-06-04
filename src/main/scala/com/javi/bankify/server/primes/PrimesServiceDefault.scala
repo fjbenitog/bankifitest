@@ -4,6 +4,7 @@ import scala.concurrent.{ExecutionContext, Future}
 
 class PrimesServiceDefault private(implicit computingExecutionContext: ExecutionContext) extends PrimesService {
 
+  //Copied from internet implementation
   def generatePrimes(n:Long):Future[List[Long]] = Future{
       var c = 1
       var p = 2
