@@ -7,13 +7,8 @@ lazy val bankifytest = (project in file("."))
   .settings(
     name := "bankifytest",
     dockerImageCreationTask := (publishLocal in Docker).value,
-    libraryDependencies ++= Akka.Common,
-    libraryDependencies ++= Cats.All,
-    libraryDependencies ++= Testing.scalaTest.Default,
-    libraryDependencies ++= Logging.All,
-    libraryDependencies ++= Circe.All,
-    libraryDependencies += Logging.akka,
     dockerBaseImage := "openjdk:8-jre-stretch",
     dockerUpdateLatest := true,
     dockerExposedPorts := Seq(8080)
   )
+  .settings(Dependencies.bankifytest)

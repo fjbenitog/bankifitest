@@ -19,4 +19,6 @@ object Versions {
   }
 
   val circe = "0.11.1"
+
+  val scraper = "2.1.0"
 }

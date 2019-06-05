@@ -36,7 +36,7 @@ class WebServer(implicit val actorSystem: ActorSystem) extends BankifyTestAPI {
   import actorSystem.dispatcher
   val primesServiceProvider = PrimesServiceProvider()
 
-  private implicit val timeout: Timeout = Timeout(5 second)
+  private implicit val timeout: Timeout = Timeout(30 second)
 
   val receptionist =
     actorSystem.actorOf(GoogleSearchReceptionist.props(), "GoogleSearchReceptionist")

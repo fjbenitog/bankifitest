@@ -26,15 +26,10 @@ object Dependencies {
     lazy val Common = Seq(actor, stream, http, json) ++ testkit.All
   }
 
-  object Testing {
-
-    object scalaTest {
-      val scalaTest = "org.scalatest" %% "scalatest" % Versions.scalaTest
-
-      lazy val Default = Seq(scalaTest).map(_ % Test)
-    }
-
+  object Scraper {
+    val core = "net.ruippeixotog" %% "scala-scraper" % Versions.scraper
   }
+
 
   object Circe {
     val core    = "io.circe" %% "circe-core"           % Versions.circe
@@ -46,6 +41,15 @@ object Dependencies {
     lazy val All = Seq(core, parser, generic, refined, extras)
   }
 
+  object Testing {
+
+    object scalaTest {
+      val scalaTest = "org.scalatest" %% "scalatest" % Versions.scalaTest
+
+      lazy val Default = Seq(scalaTest).map(_ % Test)
+    }
+
+  }
   object Logging {
 
     val akka = "com.typesafe.akka" %% "akka-slf4j" % Versions.akka.main
@@ -66,5 +70,16 @@ object Dependencies {
     }
 
     lazy val All = slf4j.All ++ log4j.All
+  }
+
+  lazy val bankifytest = Def.settings {
+    libraryDependencies ++= Seq(
+      Akka.Common,
+      Cats.All,
+      Testing.scalaTest.Default,
+      Logging.All,
+      Circe.All,
+      Seq(Logging.akka,Scraper.core)
+    ).flatten
   }
 }

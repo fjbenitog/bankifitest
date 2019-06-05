@@ -15,14 +15,14 @@ object GoogleSearchCoordinator {
 class GoogleSearchCoordinator(reply: ActorRef, googleSearch: ActorRef) extends Actor {
 
   override def preStart(): Unit =
-    context.setReceiveTimeout(3 seconds)
+    context.setReceiveTimeout(25 seconds)
 
   override def receive: Receive = {
     case Query(query) =>
       context.system.log.debug(s"Created Coordinator for GoogleSearch with query:$query")
       googleSearch ! Search(query)
 
-    case f @ Found(title, url, text) =>
+    case f @ ValueFound(title, url, text) =>
       context.system.log.debug(s"A result was found:$f")
       reply ! Result(title, url, text)
       context.stop(self)
@@ -32,7 +32,7 @@ class GoogleSearchCoordinator(reply: ActorRef, googleSearch: ActorRef) extends A
       reply ! SearchFailure("Timeout Searching in Google")
       context.stop(self)
 
-    case Failure(message) =>
+    case GoogleFailure(message) =>
       context.system.log.debug(s"Failure Searching in Google - $message.")
       reply ! SearchFailure(message)
       context.stop(self)
