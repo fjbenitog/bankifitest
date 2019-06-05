@@ -1,11 +1,13 @@
 package com.javi.bankify.server
 
 import akka.actor.ActorSystem
+import akka.http.scaladsl.model.{StatusCode, StatusCodes}
 import akka.http.scaladsl.server.Route
 import akka.http.scaladsl.server.Directives._
 import akka.stream._
 import com.javi.bankify.model._
 import de.heikoseeberger.akkahttpcirce.FailFastCirceSupport
+import cats.implicits._
 
 trait HttpRouter extends FailFastCirceSupport { api: BankifyTestAPI =>
 
@@ -30,9 +32,15 @@ trait HttpRouter extends FailFastCirceSupport { api: BankifyTestAPI =>
   private def googleRoute: Route =
     path("google") {
       parameters('query) { query =>
-        complete(
-          api.searchInGoogle(query)
-        )
+        extractExecutionContext { implicit ec =>
+          complete(api.searchInGoogle(query).map(parseResponse))
+        }
       }
     }
+
+  def parseResponse(response: GoogleResponse): (StatusCode, GoogleResponse) = response match {
+    case error: GoogleQueryFailure => StatusCodes.InternalServerError -> error
+    case result                    => StatusCodes.OK                  -> result
+  }
+
 }

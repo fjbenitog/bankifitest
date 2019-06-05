@@ -36,7 +36,7 @@ class WebServer(implicit val actorSystem: ActorSystem) extends BankifyTestAPI {
   import actorSystem.dispatcher
   val primesServiceProvider = PrimesServiceProvider()
 
-  private implicit val timeout: Timeout = Timeout(1 second)
+  private implicit val timeout: Timeout = Timeout(5 second)
 
   val receptionist =
     actorSystem.actorOf(GoogleSearchReceptionist.props(), "GoogleSearchReceptionist")
@@ -50,6 +50,9 @@ class WebServer(implicit val actorSystem: ActorSystem) extends BankifyTestAPI {
 
   override def searchInGoogle(query: String): Future[GoogleResponse] =
     (receptionist ? Query(query))
-      .mapTo[Result]
-      .map(result => GoogleResponse(result.title, result.url, result.text))
+      .mapTo[QueryResponse]
+      .map {
+        case Result(title, url, text) => GoogleQueryResult(title, url, text)
+        case SearchFailure(message)   => GoogleQueryFailure(message)
+      }
 }

@@ -3,8 +3,7 @@ package com.javi.bankify.server
 import org.scalatest._
 import akka.actor.ActorSystem
 import akka.testkit.TestKit
-import com.javi.bankify.model.PrimesRequest
-import com.javi.bankify.server.GoogleSearchReceptionist.Query
+import com.javi.bankify.model._
 
 class WebServerSpec(_system: ActorSystem)
   extends TestKit(_system)
@@ -14,6 +13,8 @@ class WebServerSpec(_system: ActorSystem)
 
     def this() = this(ActorSystem("WebServerSpec"))
 
+    val webServer = new WebServer()
+
     override def afterAll: Unit = {
       shutdown(system)
     }
@@ -22,7 +23,6 @@ class WebServerSpec(_system: ActorSystem)
         "generate primes numbers with Default Algorithm if this is not specified" in {
           val maxNumber = 4
           val expectedPrimeList = List(2,3)
-          val webServer = new WebServer()
 
           webServer.generatePrimes(PrimesRequest(maxNumber))
             .map(response  => {
@@ -35,7 +35,6 @@ class WebServerSpec(_system: ActorSystem)
         val maxNumber = 4
         val expectedPrimeList = List(2, 3)
         val expectedAlgorithm = "SecondAlgorithm"
-        val webServer = new WebServer()
 
         webServer.generatePrimes(PrimesRequest(maxNumber, Some(expectedAlgorithm)))
           .map(response => {
@@ -48,7 +47,6 @@ class WebServerSpec(_system: ActorSystem)
         val maxNumber = 4
         val expectedPrimeList = List(2, 3)
         val expectedAlgorithm = "InvalidAlgorithm"
-        val webServer = new WebServer()
 
         webServer.generatePrimes(PrimesRequest(maxNumber, Some(expectedAlgorithm)))
           .map(response => {
@@ -58,14 +56,13 @@ class WebServerSpec(_system: ActorSystem)
       }
 
 
-      "search" in {
-
-        val webServer = new WebServer()
+      "return the second search result from Google for query Q, excluding ads " in {
 
         webServer.searchInGoogle("pepe")
-          .map(response => {
-            response.title should be("Pepe")
-          })
+          .map {
+            case response:GoogleQueryResult => response.title should be("Pepe")
+            case _:GoogleQueryFailure => fail()
+          }
       }
 
     }
