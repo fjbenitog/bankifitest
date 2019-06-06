@@ -1,10 +1,10 @@
-#Bankify Test
+# Bankify Test
 
 This a Test for Bankify that is about two JSON REST API.
 
 
 
-####Prime Number JSON REST API
+#### Prime Number JSON REST API
 Service with JSON REST API that for a numerical input X, returns a list of all prime numbers that are less than or equal to X.
 
 You can then access the /primes endpoint at:
