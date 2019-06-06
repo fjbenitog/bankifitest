@@ -17,7 +17,7 @@ As example: ```curl --header "Content-Type: application/json"   --request POST  
 
 ##### Bonus point, allow caller to provide optionally the algorithm A to be used when calculating primes - use at least 2 algorithms.
 
-As example: ```curl --header "Content-Type: application/json"   --request POST   --data '{"maxNumber": 4,"SecondAlgorithm": "sad"}'   http://localhost:8080/primes```
+As example: ```curl --header "Content-Type: application/json"   --request POST   --data '{"maxNumber": 4, algorithmName: "SecondAlgorithm"}'   http://localhost:8080/primes```
 
 There is two algorithm, 'Default' and 'SecondAlgorithm', if you don't specify one, or doesn't exist, the 'Default' one will be used.
 
