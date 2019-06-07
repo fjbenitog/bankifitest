@@ -1,6 +1,6 @@
-# Bankify Test
+# Bankifi Test
 
-This a Test for Bankify that is about two JSON REST API.
+This a Test for Bankifi that is about two JSON REST API.
 
 
 

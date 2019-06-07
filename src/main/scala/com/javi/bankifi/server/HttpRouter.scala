@@ -1,19 +1,19 @@
-package com.javi.bankify.server
+package com.javi.bankifi.server
 
 import akka.actor.ActorSystem
 import akka.http.scaladsl.model.{StatusCode, StatusCodes}
 import akka.http.scaladsl.server.Route
 import akka.http.scaladsl.server.Directives._
 import akka.stream._
-import com.javi.bankify.model._
+import com.javi.bankifi.model._
 import de.heikoseeberger.akkahttpcirce.FailFastCirceSupport
 import cats.implicits._
 
-trait HttpRouter extends FailFastCirceSupport { api: BankifyTestAPI =>
+trait HttpRouter extends FailFastCirceSupport { api: BankifiTestAPI =>
 
   protected implicit def actorSystem: ActorSystem
   implicit lazy val httpMateriaizer: Materializer = ActorMaterializer(
-    namePrefix = Some("bankifytest-http")
+    namePrefix = Some("bankifitest-http")
   )
 
   def main: Route = primesRoute ~ googleRoute

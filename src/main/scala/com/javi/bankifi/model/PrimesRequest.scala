@@ -1,4 +1,4 @@
-package com.javi.bankify.model
+package com.javi.bankifi.model
 
 import io.circe._
 import io.circe.generic.semiauto._

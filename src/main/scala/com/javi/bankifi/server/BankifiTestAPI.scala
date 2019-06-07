@@ -1,10 +1,10 @@
-package com.javi.bankify.server
+package com.javi.bankifi.server
 
-import com.javi.bankify.model._
+import com.javi.bankifi.model._
 
 import scala.concurrent.Future
 
-trait BankifyTestAPI {
+trait BankifiTestAPI {
 
   def generatePrimes(request: PrimesRequest): Future[PrimesResponse]
 

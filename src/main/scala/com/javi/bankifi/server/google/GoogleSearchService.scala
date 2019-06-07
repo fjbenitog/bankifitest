@@ -1,4 +1,4 @@
-package com.javi.bankify.server.google
+package com.javi.bankifi.server.google
 
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets

@@ -1,10 +1,10 @@
-package com.javi.bankify.server
+package com.javi.bankifi.server
 
 
-import com.javi.bankify.model._
+import com.javi.bankifi.model._
 import akka.actor.ActorSystem
-import com.javi.bankify.model.PrimesResponse._
-import com.javi.bankify.model.PrimesRequest._
+import com.javi.bankifi.model.PrimesResponse._
+import com.javi.bankifi.model.PrimesRequest._
 import akka.http.scaladsl.testkit.ScalatestRouteTest
 import org.scalatest._
 import de.heikoseeberger.akkahttpcirce.FailFastCirceSupport._
@@ -12,11 +12,11 @@ import de.heikoseeberger.akkahttpcirce.FailFastCirceSupport._
 import scala.concurrent.Future
 
 
-class BankifyTestAPISpec extends WordSpec with ScalatestRouteTest with Matchers {
+class BankifiTestAPISpec extends WordSpec with ScalatestRouteTest with Matchers {
 
 
 
-  val httpRouter: HttpRouter = new BankifyTestAPI with HttpRouter {
+  val httpRouter: HttpRouter = new BankifiTestAPI with HttpRouter {
     override implicit val actorSystem: ActorSystem = system
 
     override def generatePrimes(request: PrimesRequest): Future[PrimesResponse] = request.algorithmName match {
@@ -27,7 +27,7 @@ class BankifyTestAPISpec extends WordSpec with ScalatestRouteTest with Matchers 
     override def searchInGoogle(query: String): Future[GoogleResponse] = ???
   }
 
-  "BankifyTest API" must {
+  "BankifiTest API" must {
 
     "return a list of primes numbers for POST requests to /primes with default algorithm" in {
       val maxNumber = 10

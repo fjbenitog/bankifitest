@@ -1,6 +1,6 @@
 version: "2"
 services:
-  bankifytest:
-    image: bankifytest
+  bankifitest:
+    image: bankifitest
     ports:
       - "8080:8080"

@@ -1,13 +1,13 @@
-package com.javi.bankify.server
+package com.javi.bankifi.server
 
 import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
 import akka.pattern._
 import akka.util.Timeout
 import cats.effect.IO
-import com.javi.bankify.model._
-import com.javi.bankify.server.GoogleSearchReceptionist._
-import com.javi.bankify.server.primes._
+import com.javi.bankifi.model._
+import com.javi.bankifi.server.GoogleSearchReceptionist._
+import com.javi.bankifi.server.primes._
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
@@ -19,7 +19,7 @@ object WebServer {
 
     val interface                         = "0.0.0.0"
     val port                              = 8080
-    implicit val actorSystem: ActorSystem = ActorSystem("bankifytest-system")
+    implicit val actorSystem: ActorSystem = ActorSystem("bankifitest-system")
 
     val server = new WebServer() with HttpRouter
 
@@ -31,7 +31,7 @@ object WebServer {
   }
 }
 
-class WebServer(implicit val actorSystem: ActorSystem) extends BankifyTestAPI {
+class WebServer(implicit val actorSystem: ActorSystem) extends BankifiTestAPI {
 
   import actorSystem.dispatcher
   val primesServiceProvider = PrimesServiceProvider()

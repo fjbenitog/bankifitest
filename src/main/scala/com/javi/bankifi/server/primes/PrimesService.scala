@@ -1,4 +1,4 @@
-package com.javi.bankify.server.primes
+package com.javi.bankifi.server.primes
 
 import scala.concurrent.{ExecutionContext, Future}
 

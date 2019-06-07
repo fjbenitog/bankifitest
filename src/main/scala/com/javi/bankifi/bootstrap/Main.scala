@@ -1,8 +1,8 @@
-package com.javi.bankify.bootstrap
+package com.javi.bankifi.bootstrap
 
 import cats.effect._
 import cats.implicits._
-import com.javi.bankify.server.WebServer
+import com.javi.bankifi.server.WebServer
 import org.slf4j.LoggerFactory
 
 object Main extends IOApp {

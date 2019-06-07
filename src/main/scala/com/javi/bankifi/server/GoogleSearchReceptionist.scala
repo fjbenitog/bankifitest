@@ -1,4 +1,4 @@
-package com.javi.bankify.server
+package com.javi.bankifi.server
 
 import akka.actor.{Actor, Props}
 object GoogleSearchReceptionist {

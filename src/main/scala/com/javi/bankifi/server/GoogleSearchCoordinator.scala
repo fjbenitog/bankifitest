@@ -1,8 +1,8 @@
-package com.javi.bankify.server
+package com.javi.bankifi.server
 
 import akka.actor.{Actor, ActorRef, Props, ReceiveTimeout}
-import com.javi.bankify.server.GoogleSearch._
-import com.javi.bankify.server.GoogleSearchReceptionist._
+import com.javi.bankifi.server.GoogleSearch._
+import com.javi.bankifi.server.GoogleSearchReceptionist._
 
 import scala.concurrent.duration._
 

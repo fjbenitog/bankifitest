@@ -10,7 +10,7 @@
         </Async>
     </Appenders>
     <Loggers>
-        <Logger name="com.javi.bankify" level="DEBUG" />
+        <Logger name="com.javi.bankifi" level="DEBUG" />
 
         <Root level="DEBUG">
             <AppenderRef ref="async"/>

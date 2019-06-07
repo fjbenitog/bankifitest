@@ -1,7 +1,7 @@
-package com.javi.bankify.server
+package com.javi.bankifi.server
 
 import akka.actor.{Actor, Props}
-import com.javi.bankify.server.google.GoogleSearchService
+import com.javi.bankifi.server.google.GoogleSearchService
 import cats.effect._
 import cats.implicits._
 

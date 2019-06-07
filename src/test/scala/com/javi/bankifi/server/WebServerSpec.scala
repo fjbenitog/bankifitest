@@ -1,9 +1,9 @@
-package com.javi.bankify.server
+package com.javi.bankifi.server
 
 import org.scalatest._
 import akka.actor.ActorSystem
 import akka.testkit.TestKit
-import com.javi.bankify.model._
+import com.javi.bankifi.model._
 
 class WebServerSpec(_system: ActorSystem)
   extends TestKit(_system)

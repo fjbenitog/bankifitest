@@ -72,7 +72,7 @@ object Dependencies {
     lazy val All = slf4j.All ++ log4j.All
   }
 
-  lazy val bankifytest = Def.settings {
+  lazy val bankifitest = Def.settings {
     libraryDependencies ++= Seq(
       Akka.Common,
       Cats.All,
