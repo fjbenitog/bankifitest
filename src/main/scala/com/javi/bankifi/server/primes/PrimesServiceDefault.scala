@@ -24,5 +24,5 @@ private class PrimesServiceDefault extends PrimesService {
     list.toList
   }
 
-  override def algorithmName: String = "Default"
+  override def algorithmName: String = "default"
 }

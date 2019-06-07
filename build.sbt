@@ -11,4 +11,4 @@ lazy val bankifytest = (project in file("."))
     dockerUpdateLatest := true,
     dockerExposedPorts := Seq(8080)
   )
-  .settings(Dependencies.bankifytest)
+  .settings(Dependencies.bankifitest)

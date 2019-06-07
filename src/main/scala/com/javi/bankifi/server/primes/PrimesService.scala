@@ -13,8 +13,12 @@ trait PrimesService {
 class PrimesServiceProvider {
   private val defaultAlgorithm = new PrimesServiceDefault
   private val secondAlgorithm  = new PrimesServiceSecondModel
+  private val streamPrimes     = new SieveEratostheness
   private val algorithms =
-    Map[String, PrimesService](secondAlgorithm.algorithmName -> secondAlgorithm)
+    Map[String, PrimesService](
+      secondAlgorithm.algorithmName -> secondAlgorithm,
+      streamPrimes.algorithmName    -> streamPrimes
+    )
 
   def getPrimesService(algorithmName: Option[String] = Option.empty): PrimesService =
     algorithmName match {

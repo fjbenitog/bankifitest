@@ -25,5 +25,5 @@ private class PrimesServiceSecondModel extends PrimesService {
     numbers.filter(n => isPrime(n)).toList
   }
 
-  override def algorithmName: String = "SecondAlgorithm"
+  override def algorithmName: String = "second-algorithm"
 }

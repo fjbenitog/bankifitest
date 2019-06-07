@@ -10,7 +10,7 @@ object GoogleSearch {
 
   sealed trait SearchResponse
   case class ValueFound(title: String, url: String, text: String) extends SearchResponse
-  case class GoogleFailure(message: String) extends SearchResponse
+  case class GoogleFailure(message: String)                       extends SearchResponse
 
   def props: Props = Props(new GoogleSearch)
 }
@@ -34,7 +34,7 @@ class GoogleSearch extends Actor {
             )
         }
         .handleErrorWith(ex => IO.pure(GoogleFailure(ex.getMessage)))
-          .unsafeRunSync()
+        .unsafeRunSync()
       context.sender() ! searchResponse
   }
 }

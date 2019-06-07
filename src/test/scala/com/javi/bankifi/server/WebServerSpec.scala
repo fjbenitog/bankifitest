@@ -58,10 +58,15 @@ class WebServerSpec(_system: ActorSystem)
 
       "return the second search result from Google for query Q, excluding ads " in {
 
-        webServer.searchInGoogle("pepe")
+        val expectedResult = GoogleQueryResult("BankiFi - Beyond Open | LinkedIn" ,
+          "https://www.linkedin.com/company/bankifi",
+          "Learn about working at BankiFi - Beyond Open. Join LinkedIn today for free. See who you know at BankiFi - Beyond Open, leverage your professional network, ..."
+        )
+
+        webServer.searchInGoogle("bankifi")
           .map {
-            case response:GoogleQueryResult => response.title should be("Pepe")
-            case _:GoogleQueryFailure => fail()
+            case response:GoogleQueryResult => response shouldBe expectedResult
+            case error:GoogleQueryFailure => fail(error.message)
           }
       }
 

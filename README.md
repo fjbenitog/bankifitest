@@ -7,19 +7,38 @@ This a Test for Bankifi that is about two JSON REST API.
 #### Prime Number JSON REST API
 Service with JSON REST API that for a numerical input X, returns a list of all prime numbers that are less than or equal to X.
 
-You can then access the /primes endpoint at:
+The server is running at:
 
 ```bash
 http://localhost:8080
 ```
+You can access at the endpoint /primes with a POST request with a json body as follows :
+```json
+{
+  "maxNumber": 4,
+}
+```
 
-As example: ```curl --header "Content-Type: application/json"   --request POST   --data '{"maxNumber": 4,}'   http://localhost:8080/primes```
+As example: 
+```bash
+curl --header "Content-Type: application/json"   --request POST   --data '{"maxNumber": 4}'   http://localhost:8080/primes
+```
 
 ##### Bonus point, allow caller to provide optionally the algorithm A to be used when calculating primes - use at least 2 algorithms.
 
-As example: ```curl --header "Content-Type: application/json"   --request POST   --data '{"maxNumber": 4, algorithmName: "SecondAlgorithm"}'   http://localhost:8080/primes```
+In this case the json boy is: 
+```json
+{
+  "maxNumber": 4,
+  "algorithmName": "SecondAlgorithm"
+}
+```
+As example: 
+```bash 
+curl --header "Content-Type: application/json"   --request POST   --data '{"maxNumber": 4, "algorithmName": "SecondAlgorithm"}'   http://localhost:8080/primes
+```
 
-There is two algorithm, 'Default' and 'SecondAlgorithm', if you don't specify one, or doesn't exist, the 'Default' one will be used.
+There is 3 algorithm, 'default','second-algorithm','sieve_eratostheness', if you don't specify one, or does not exist, the 'default' one will be used.
 
 
 #### Google search result API

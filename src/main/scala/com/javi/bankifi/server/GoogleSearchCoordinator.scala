@@ -15,7 +15,7 @@ object GoogleSearchCoordinator {
 class GoogleSearchCoordinator(reply: ActorRef, googleSearch: ActorRef) extends Actor {
 
   override def preStart(): Unit =
-    context.setReceiveTimeout(25 seconds)
+    context.setReceiveTimeout(5 seconds)
 
   override def receive: Receive = {
     case Query(query) =>
