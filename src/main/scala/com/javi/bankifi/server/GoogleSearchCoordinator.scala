@@ -20,7 +20,7 @@ class GoogleSearchCoordinator(reply: ActorRef, googleSearch: ActorRef) extends A
   override def preStart(): Unit =
     context.setReceiveTimeout(5 seconds)
 
-  override def receive: Receive =  query orElse waitingResult
+  override def receive: Receive = query orElse waitingResult
 
   var queryValue = ""
 
@@ -30,7 +30,6 @@ class GoogleSearchCoordinator(reply: ActorRef, googleSearch: ActorRef) extends A
       context.system.log.debug(s"Created Coordinator for GoogleSearch with query:$queryValue")
       googleSearch ! Search(query)
   }
-
 
   def waitingResult: Receive = {
     case f @ ValueFound(title, url, text) =>

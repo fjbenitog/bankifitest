@@ -30,7 +30,6 @@ object Dependencies {
     val core = "net.ruippeixotog" %% "scala-scraper" % Versions.scraper
   }
 
-
   object Circe {
     val core    = "io.circe" %% "circe-core"           % Versions.circe
     val parser  = "io.circe" %% "circe-parser"         % Versions.circe
@@ -79,7 +78,7 @@ object Dependencies {
       Testing.scalaTest.Default,
       Logging.All,
       Circe.All,
-      Seq(Logging.akka,Scraper.core)
+      Seq(Logging.akka, Scraper.core)
     ).flatten
   }
 }

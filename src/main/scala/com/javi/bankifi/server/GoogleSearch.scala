@@ -6,7 +6,6 @@ import com.javi.bankifi.server.google.GoogleSearchService
 import cats.effect._
 import cats.implicits._
 
-
 object GoogleSearch {
   case class Search(query: String)
 
@@ -16,7 +15,6 @@ object GoogleSearch {
 
   implicit val showValueFound: Show[ValueFound] =
     Show.show(value => s"""ValueFound("${value.title}","${value.url}","${value.text}")""")
-
 
   def props: Props = Props(new GoogleSearch)
 }
