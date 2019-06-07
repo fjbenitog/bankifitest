@@ -8,6 +8,7 @@ import cats.effect.IO
 import com.javi.bankifi.model._
 import com.javi.bankifi.server.GoogleSearchReceptionist._
 import com.javi.bankifi.server.primes._
+import org.slf4j.LoggerFactory
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
@@ -36,6 +37,8 @@ class WebServer(implicit val actorSystem: ActorSystem) extends BankifiTestAPI {
   import actorSystem.dispatcher
   val primesServiceProvider = PrimesServiceProvider()
 
+  val logger  = LoggerFactory.getLogger(WebServer.getClass)
+
   private implicit val timeout: Timeout = Timeout(10 seconds)
 
   val receptionist =
@@ -43,9 +46,12 @@ class WebServer(implicit val actorSystem: ActorSystem) extends BankifiTestAPI {
 
   override def generatePrimes(request: PrimesRequest): Future[PrimesResponse] = {
     val primesService = primesServiceProvider.getPrimesService(request.algorithmName)
-    primesService
-      .generatePrimes(request.maxNumber)
-      .map(primes => PrimesResponse(primesService.algorithmName, primes))
+    for{
+      _ <- Future(logger.debug(s"Generating primes numbers for ${request.maxNumber} ..."))
+      primes <- primesService.generatePrimes(request.maxNumber)
+      _ <- Future(logger.debug(s"Generated primes numbers:${primes} for ${request.maxNumber}"))
+    }yield PrimesResponse(primesService.algorithmName, primes)
+
   }
 
   override def searchInGoogle(query: String): Future[GoogleResponse] =

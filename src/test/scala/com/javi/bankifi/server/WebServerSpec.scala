@@ -27,14 +27,14 @@ class WebServerSpec(_system: ActorSystem)
           webServer.generatePrimes(PrimesRequest(maxNumber))
             .map(response  => {
               response.primes should be (expectedPrimeList)
-              response.algorithmName should be ("Default")
+              response.algorithmName should be ("default")
             })
         }
 
       "generate primes numbers with the specified Algorithm" in {
         val maxNumber = 4
         val expectedPrimeList = List(2, 3)
-        val expectedAlgorithm = "SecondAlgorithm"
+        val expectedAlgorithm = "second-algorithm"
 
         webServer.generatePrimes(PrimesRequest(maxNumber, Some(expectedAlgorithm)))
           .map(response => {
@@ -51,7 +51,7 @@ class WebServerSpec(_system: ActorSystem)
         webServer.generatePrimes(PrimesRequest(maxNumber, Some(expectedAlgorithm)))
           .map(response => {
             response.primes should be(expectedPrimeList)
-            response.algorithmName should be("Default")
+            response.algorithmName should be("default")
           })
       }
 

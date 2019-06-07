@@ -5,7 +5,7 @@ lazy val akkaVersion = "2.5.22"
 lazy val bankifytest = (project in file("."))
   .enablePlugins(DockerComposePlugin, RevolverPlugin, JavaAppPackaging)
   .settings(
-    name := "bankifi",
+    name := "bankifitest",
     dockerImageCreationTask := (publishLocal in Docker).value,
     dockerBaseImage := "openjdk:8-jre-stretch",
     dockerUpdateLatest := true,

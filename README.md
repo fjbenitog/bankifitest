@@ -15,7 +15,7 @@ http://localhost:8080
 You can access at the endpoint /primes with a POST request with a json body as follows :
 ```json
 {
-  "maxNumber": 4,
+  "maxNumber": 4
 }
 ```
 
@@ -30,15 +30,20 @@ In this case the json boy is:
 ```json
 {
   "maxNumber": 4,
-  "algorithmName": "SecondAlgorithm"
+  "algorithmName": "second-algorithm"
 }
 ```
 As example: 
 ```bash 
-curl --header "Content-Type: application/json"   --request POST   --data '{"maxNumber": 4, "algorithmName": "SecondAlgorithm"}'   http://localhost:8080/primes
+curl --header "Content-Type: application/json"   --request POST   --data '{"maxNumber": 4, "second-algorithm": "SecondAlgorithm"}'   http://localhost:8080/primes
 ```
 
-There is 3 algorithm, 'default','second-algorithm','sieve_eratostheness', if you don't specify one, or does not exist, the 'default' one will be used.
+There is 3 algorithm:
+ * 'default'
+ * 'second-algorithm'
+ * 'sieve_eratostheness'
+
+if you don't specify one, or does not exist, the 'default' one will be used.
 
 
 #### Google search result API
@@ -52,7 +57,10 @@ Where <Query> is any value you want to use.
 
 ## Getting Started
 
-You can run the server using Revolver plugin:
+
+####  Run Locally
+
+You can run the server locally using Revolver plugin:
 
 * Start server 
 ```bash
@@ -62,6 +70,7 @@ sbt reStart
 ```bash
 sbt reStop
 ```
+#### Run in a Docker Container
 
 Create a docker image for the project
 
