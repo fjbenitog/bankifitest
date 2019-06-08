@@ -84,6 +84,23 @@ Run this image on a local container:
 sbt dockerComposeUp
 ```
 
+## Monitoring
+
+The server is monitored by kamon. 
+
+If you run docker-compose, a Prometheus server will collect those metrics. And Grafana will display the results.
+
+* Prometheus:
+```
+http://localhost:9090/
+```
+
+* Grafana:
+```
+http://localhost:3000/
+
+```
+
 
 
 
