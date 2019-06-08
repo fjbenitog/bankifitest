@@ -15,9 +15,11 @@ class GoogleSearchServiceSpec extends WordSpec with Matchers {
           "https://www.linkedin.com/company/bankifi",
       "Learn about working at BankiFi - Beyond Open. Join LinkedIn today for free. See who you know at BankiFi - Beyond Open, leverage your professional network, ...")
 
-        val result = googleSearchService.search(Q).unsafeRunSync()
+        val QueryResult(text,url,title) = googleSearchService.search(Q).unsafeRunSync()
 
-          result shouldBe expectedResult
+      title should not be empty
+      url should not be empty
+      text should not be empty
       }
     }
 }

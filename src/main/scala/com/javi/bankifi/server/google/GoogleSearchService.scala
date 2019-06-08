@@ -35,12 +35,12 @@ class GoogleSearchService {
 
   def search(query: String): IO[QueryResult] = IO {
 
-    logger.debug(s"Searching in Google for:$query ...")
+    logger.debug(s"Searching in Google for:'$query' ...")
     val doc: Document =
       browser.get(s"$googleQueryUrl${URLEncoder.encode(query, StandardCharsets.UTF_8.name())}")
     logger.debug(s"Results in Google for:$query ...")
 
-    def toQueryResults(doc: Document) =
+    def toQueryResults(doc: Document): List[QueryResult] =
       for {
         element <- doc >> elementList(".rc")
         r       <- element.select(".r")
@@ -49,14 +49,14 @@ class GoogleSearchService {
         s       <- element.select(".s")
       } yield QueryResult(title.text, url.text, s.text)
 
-    def selectSecondResult(results: List[QueryResult]) =
+    def selectSecondResult(results: List[QueryResult]): QueryResult =
       results
-        .lift(2)
+        .get(1)
         .getOrElse(QueryResult("", "", ""))
 
     val results = toQueryResults(doc)
 
-    logger.debug(s"All Elements found for query:$query - \n${results.show}")
+    logger.debug(s"All Elements found for query:'$query' - \n${results.show}")
 
     selectSecondResult(results)
   }

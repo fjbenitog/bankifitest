@@ -4,7 +4,6 @@ import akka.actor.{Actor, ActorRef, Props, ReceiveTimeout}
 import cats.implicits._
 import com.javi.bankifi.server.GoogleSearch._
 import com.javi.bankifi.server.GoogleSearchReceptionist._
-import com.javi.bankifi.config.DefaultBlockingDispatcher
 
 import scala.concurrent.duration._
 
@@ -12,7 +11,7 @@ object GoogleSearchCoordinator {
 
   def props(reply: ActorRef, googleSearch: ActorRef): Props =
     Props(new GoogleSearchCoordinator(reply, googleSearch))
-      .withDispatcher(DefaultBlockingDispatcher)
+
 }
 
 class GoogleSearchCoordinator(reply: ActorRef, googleSearch: ActorRef) extends Actor {
@@ -27,13 +26,13 @@ class GoogleSearchCoordinator(reply: ActorRef, googleSearch: ActorRef) extends A
   def query: Receive = {
     case Query(query) =>
       queryValue = query
-      context.system.log.debug(s"Created Coordinator for GoogleSearch with query:$queryValue")
+      context.system.log.debug(s"Created Coordinator for GoogleSearch with query:'$queryValue'")
       googleSearch ! Search(query)
   }
 
   def waitingResult: Receive = {
     case f @ ValueFound(title, url, text) =>
-      context.system.log.debug(s"A result was found:${f.show} for query:$queryValue")
+      context.system.log.debug(s"A result was found:${f.show} for query:'$queryValue'")
       reply ! Result(title, url, text)
       context.stop(self)
 
@@ -43,7 +42,7 @@ class GoogleSearchCoordinator(reply: ActorRef, googleSearch: ActorRef) extends A
       context.stop(self)
 
     case GoogleFailure(message) =>
-      context.system.log.debug(s"Failure Searching in Google query:$queryValue - $message.")
+      context.system.log.debug(s"Failure Searching in Google query:'$queryValue' - $message.")
       reply ! SearchFailure(message)
       context.stop(self)
   }

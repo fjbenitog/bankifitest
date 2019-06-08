@@ -5,6 +5,9 @@ import cats.Show
 import com.javi.bankifi.server.google.GoogleSearchService
 import cats.effect._
 import cats.implicits._
+import com.javi.bankifi.config.DefaultBlockingDispatcher
+
+import scala.util.{Failure, Success}
 
 object GoogleSearch {
   case class Search(query: String)
@@ -16,16 +19,20 @@ object GoogleSearch {
   implicit val showValueFound: Show[ValueFound] =
     Show.show(value => s"""ValueFound("${value.title}","${value.url}","${value.text}")""")
 
-  def props: Props = Props(new GoogleSearch)
+  def props: Props =
+    Props(new GoogleSearch)
+      .withDispatcher(DefaultBlockingDispatcher)
 }
 class GoogleSearch extends Actor {
 
   val googleSearchService = new GoogleSearchService
 
   import GoogleSearch._
+  import context.dispatcher
   override def receive: Receive = {
     case Search(query) =>
-      val searchResponse = googleSearchService
+      val replayTo = context.sender()
+      googleSearchService
         .search(query)
         .map(response => ValueFound(response.title, response.url, response.text))
         .onError {
@@ -33,12 +40,15 @@ class GoogleSearch extends Actor {
             IO(
               context.system.log.error(
                 ex,
-                s"Error Searching in Google for query: $query"
+                s"Error Searching in Google for query: '$query'"
               )
             )
         }
-        .handleErrorWith(ex => IO.pure(GoogleFailure(ex.getMessage)))
-        .unsafeRunSync()
-      context.sender() ! searchResponse
+        .unsafeToFuture()
+        .onComplete {
+          case Success(searchResponse) => replayTo ! searchResponse
+          case Failure(ex)             => replayTo ! GoogleFailure(ex.getMessage)
+        }
+
   }
 }

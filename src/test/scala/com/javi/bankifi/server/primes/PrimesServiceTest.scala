@@ -1,7 +1,6 @@
 package com.javi.bankifi.server.primes
 
 import org.scalatest._
-import cats._
 import cats.implicits._
 
 import scala.concurrent.Future
