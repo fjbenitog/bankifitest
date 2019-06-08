@@ -40,6 +40,20 @@ object Dependencies {
     lazy val All = Seq(core, parser, generic, refined, extras)
   }
 
+  object Kamon {
+    val core       = "io.kamon" %% "kamon-core"           % Versions.kamon.core
+    val akka       = "io.kamon" %% "kamon-akka-2.5"       % Versions.kamon.akka
+    val http       = "io.kamon" %% "kamon-akka-http-2.5"  % Versions.kamon.http
+    val prometheus = "io.kamon" %% "kamon-prometheus"     % Versions.kamon.prometheus
+    val sysmetrics = "io.kamon" %% "kamon-system-metrics" % Versions.kamon.sysmetrics
+    val scala      = "io.kamon" %% "kamon-scala-future"   % Versions.kamon.scala
+    val executors  = "io.kamon" %% "kamon-executors"      % Versions.kamon.executors
+
+    lazy val All = Seq(core, akka, http, executors, prometheus, sysmetrics, scala).map(
+      _ exclude ("ch.qos.logback", "logback-classic")
+    )
+  }
+
   object Testing {
 
     object scalaTest {
@@ -78,6 +92,7 @@ object Dependencies {
       Testing.scalaTest.Default,
       Logging.All,
       Circe.All,
+      Kamon.All,
       Seq(Logging.akka, Scraper.core)
     ).flatten
   }

@@ -1,5 +1,7 @@
 package com.javi.bankifi.server
 
+import java.util.UUID
+
 import akka.actor.{Actor, Props}
 object GoogleSearchReceptionist {
 
@@ -17,12 +19,15 @@ class GoogleSearchReceptionist extends Actor {
 
   import GoogleSearchReceptionist._
 
-  val googleSearch = context.actorOf(GoogleSearch.props)
+  val googleSearch = context.actorOf(GoogleSearch.props,"GoogleSearch")
 
   override def receive: Receive = {
     case query @ Query(_) =>
       val coordinator =
-        context.actorOf(GoogleSearchCoordinator.props(context.sender(), googleSearch))
+        context.actorOf(
+          GoogleSearchCoordinator.props(context.sender(), googleSearch),
+          s"googleSearchCoordinator-${UUID.randomUUID}"
+        )
       coordinator ! query
 
   }
